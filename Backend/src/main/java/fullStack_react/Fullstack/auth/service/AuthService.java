@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import fullStack_react.Fullstack.auth.dto.AuthResponse;
 import fullStack_react.Fullstack.auth.dto.LoginRequest;
 import fullStack_react.Fullstack.auth.dto.RegisterRequest;
-import fullStack_react.Fullstack.security.JtwUtil;
+import fullStack_react.Fullstack.security.JwtUtil;
 import fullStack_react.Fullstack.usuario.model.Usuario;
 import fullStack_react.Fullstack.usuario.repository.UsuarioRepository;
 
@@ -20,7 +20,7 @@ public class AuthService {
     private BCryptPasswordEncoder encoder;
 
     @Autowired
-    private JtwUtil jwtUtil;
+    private JwtUtil jwtUtil;
 
     public Usuario register(RegisterRequest request) {
 
