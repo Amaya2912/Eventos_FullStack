@@ -1,21 +1,32 @@
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema, type LoginFormData } from '../types/schemas';
 import { useMutation } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import { login } from '../api/authApi';
+import { loginSchema, type LoginFormData } from '../types/schemas';
 
 export default function LoginForm() {
+  const navigate = useNavigate();
+
   const { register, handleSubmit, formState: { errors, touchedFields } } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema)
   });
 
   const loginMutation = useMutation({
     mutationFn: login,
-    onSuccess: (data) => {
-      console.log('Login successful', data);
+    onSuccess: (data, variables) => {
+      const email = data.email?.trim() || variables.email;
+      const userName = data.nombre?.trim() || email.split('@')[0] || 'Usuario';
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('userName', userName);
+      localStorage.setItem('userEmail', email);
+      navigate('/events');
     },
-    onError: (error: Error) => {
-      console.error('Login failed', error.message);
+    onError: () => {
+      toast.error('No se pudo iniciar sesion. Revisa tu email y contrasena.');
     },
   });
 
@@ -39,7 +50,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <h2 className='text-2xl font-bold mb-6 text-center text-indigo-900'>Iniciar Sesión</h2>
+      <h2 className='text-2xl font-bold mb-6 text-center text-indigo-900'>Iniciar Sesion</h2>
       <form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
         <div>
           <label className='block text-indigo-700 font-semibold text-sm mb-2'>Email</label>
@@ -52,22 +63,21 @@ export default function LoginForm() {
           {errors.email && <p className='text-red-500 text-xs mt-1.5 font-medium'>{errors.email.message}</p>}
         </div>
         <div>
-          <label className='block text-indigo-700 font-semibold text-sm mb-2'>Contraseña</label>
+          <label className='block text-indigo-700 font-semibold text-sm mb-2'>Contrasena</label>
           <input
             type='password'
             {...register('password')}
             className={getInputClass('password')}
-            placeholder='••••••••'
+            placeholder='********'
           />
           {errors.password && <p className='text-red-500 text-xs mt-1.5 font-medium'>{errors.password.message}</p>}
         </div>
-        {loginMutation.error && <p className='text-red-500 text-sm p-3 bg-red-50 rounded-lg font-medium'>Error: {loginMutation.error.message}</p>}
         <button
           type='submit'
           disabled={loginMutation.isPending}
           className='w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white py-3 rounded-lg hover:from-indigo-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 font-semibold shadow-md'
         >
-          {loginMutation.isPending ? 'Cargando...' : 'Iniciar Sesión'}
+          {loginMutation.isPending ? 'Cargando...' : 'Iniciar Sesion'}
         </button>
       </form>
     </>

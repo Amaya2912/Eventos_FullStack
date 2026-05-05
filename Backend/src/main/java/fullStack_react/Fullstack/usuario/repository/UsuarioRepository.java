@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import fullStack_react.Fullstack.usuario.model.Usuario;
 
 public interface UsuarioRepository extends MongoRepository<Usuario, String> {
-    Usuario findByEmail(String email);
+    Usuario findByEmailIgnoreCase(String email);
 }

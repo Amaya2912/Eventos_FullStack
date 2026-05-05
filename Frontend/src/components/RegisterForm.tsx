@@ -1,9 +1,13 @@
 import { useForm } from 'react-hook-form';
-import {type RegisterFormData } from '../types/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { registerSchema, type RegisterFormData } from '../types/schemas';
 import { useMutation } from '@tanstack/react-query';
 import { register as registerUser } from '../api/authApi';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function RegisterForm() {
+  const navigate = useNavigate();
 
   const initialValues: RegisterFormData = {
     name: '',
@@ -11,15 +15,19 @@ export default function RegisterForm() {
     password: '',
   };
 
-  const { register, handleSubmit, formState: { errors, touchedFields } } = useForm<RegisterFormData>({defaultValues: initialValues});
+  const { register, handleSubmit, formState: { errors, touchedFields } } = useForm<RegisterFormData>({
+    defaultValues: initialValues,
+    resolver: zodResolver(registerSchema)
+  });
 
   const registerMutation = useMutation({
     mutationFn: registerUser,
-    onSuccess: (data) => {
-      console.log('Registro exitoso', data);
+    onSuccess: () => {
+      navigate('/login');
     },
-    onError: (error: Error) => {
-      console.error('Registro fallido', error.message);
+    onError: () => {
+        toast.error('No se pudo crear la cuenta, el correo ya está asociado a otra cuenta');
+      
     },
   });
 
@@ -75,7 +83,6 @@ export default function RegisterForm() {
           />
           {errors.password && <p className='text-red-500 text-xs mt-1.5 font-medium'>{errors.password.message}</p>}
         </div>
-        {registerMutation.error && <p className='text-red-500 text-sm p-3 bg-red-50 rounded-lg font-medium'>Error: {registerMutation.error.message}</p>}
         <button
           type='submit'
           disabled={registerMutation.isPending}

@@ -23,13 +23,14 @@ public class AuthService {
     private JwtUtil jwtUtil;
 
     public Usuario register(RegisterRequest request) {
+        String email = normalizeEmail(request.getEmail());
 
-        if (repo.findByEmail(request.getEmail()) != null) {
+        if (repo.findByEmailIgnoreCase(email) != null) {
             throw new RuntimeException("Email ya registrado");
         }
 
         Usuario user = new Usuario();
-        user.setEmail(request.getEmail());
+        user.setEmail(email);
         user.setNombre(request.getNombre());
         user.setPassword(encoder.encode(request.getPassword()));
 
@@ -37,8 +38,9 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
+        String email = normalizeEmail(request.getEmail());
 
-        Usuario user = repo.findByEmail(request.getEmail());
+        Usuario user = repo.findByEmailIgnoreCase(email);
 
         if (user == null) {
             throw new RuntimeException("Usuario no encontrado");
@@ -50,6 +52,10 @@ public class AuthService {
 
         String token = jwtUtil.generateToken(user.getEmail());
 
-        return new AuthResponse(token);
+        return new AuthResponse(token, user.getNombre(), user.getEmail());
+    }
+
+    private String normalizeEmail(String email) {
+        return email.trim().toLowerCase();
     }
 }

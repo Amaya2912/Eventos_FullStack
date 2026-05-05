@@ -2,7 +2,6 @@ package fullStack_react.Fullstack.event.dto;
 
 import java.time.LocalDateTime;
 
-import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +17,6 @@ public class EventRequest {
     private String location;
 
     @NotNull
-    @Future
     private LocalDateTime date;
 
     @NotNull
