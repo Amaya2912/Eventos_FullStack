@@ -209,9 +209,11 @@ Authorization: Bearer TU_TOKEN
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Autores
 
 **Jhon Amaya**
+**Julio Gutierrez**
+**Luis Toscano**
 
 ---
 
