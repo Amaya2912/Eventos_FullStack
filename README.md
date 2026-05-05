@@ -163,19 +163,19 @@ Authorization: Bearer TU_TOKEN
 ## 🖼️ Interfaz de Usuario
 
 ### 🔐 Login
-![Login](./images/Captura de pantalla 2026-05-05 142626.png)
+![Login](./images/Captura%20de%20pantalla%202026-05-05%20142626.png)
 
 ### 📝 Registro
-![Registro](./images/Captura de pantalla 2026-05-05 142657.png)
+![Registro](./images/Captura%20de%20pantalla%202026-05-05%20142657.png)
 
 ### 📅 Dashboard de Eventos
-![Dashboard](./images/Captura de pantalla 2026-05-05 142811.png)
+![Dashboard](./images/Captura%20de%20pantalla%202026-05-05%20142811.png)
 
 ### ➕ Crear Evento
-![Crear Evento](./images/Captura de pantalla 2026-05-05 142841.png)
+![Crear Evento](./images/Captura%20de%20pantalla%202026-05-05%20142841.png)
 
 ### ➕ Editar Evento
-![Crear Evento](./images/Captura de pantalla 2026-05-05 142911.png)
+![Actualizar Evento](./images/Captura%20de%20pantalla%202026-05-05%20142911.png)
 
 ---
 
