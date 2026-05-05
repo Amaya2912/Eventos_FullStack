@@ -201,7 +201,6 @@ Authorization: Bearer TU_TOKEN
 
 ## 📈 Posibles mejoras
 
-- Edición de eventos
 - Roles (ADMIN / USER)
 - Subida de imágenes
 - Notificaciones
