@@ -147,6 +147,7 @@ npm run dev
 | POST   | /events       | Crear evento              |
 | GET    | /events       | Obtener eventos del user  |
 | DELETE | /events/{id}  | Eliminar evento           |
+| PUT    | /events/{id}  | Atualiza eventos          |
 
 ---
 
